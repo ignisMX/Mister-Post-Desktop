@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd
+">   
+    <bean id="properties" class="mx.com.mister.post.beans.properties.PropertiesBean">
+        <property name="properties">
+            <util:properties location="classpath:config/properties/config.properties" />
+        </property>
+    </bean>
+    <bean id="facebook" class="com.restfb.DefaultFacebookClient">
+        <constructor-arg type="com.restfb.Version">
+            <value>LATEST</value> 
+        </constructor-arg> 
+    </bean>
+    <bean id="scope" class="com.restfb.scope.ScopeBuilder"></bean>
+    <bean id="facebookClient" class="mx.com.mister.post.beans.graph.api.GraphAPIBean">
+        <property name="facebookClient" ref="facebook" />
+        <property name="scopeBuilder" ref="scope" />
+    </bean>
+    <bean id="gson" class="com.google.gson.Gson"></bean>
+    <bean id="startApp" class="mx.com.mister.post.impl.access.StartAppImpl">
+        <property name="properties" ref="properties" />
+        <property name="graphAPI" ref="facebookClient" />
+        <property name="gson" ref="gson" />
+    </bean>
+</beans>
