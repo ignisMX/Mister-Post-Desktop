@@ -123,8 +123,7 @@ public class MaintContainer extends JApplet {
                     if (startApp.isRedirectSuccess(webEngine.getLocation())) {
                         String code = startApp.getCode(webEngine.getLocation());
                         String urlAccessToken = startApp.getUrlAccessToken(startApp.getLoginURLRedirect(loginDialogURL), code);
-                        startApp.getAccessToken(urlAccessToken);
-                        System.out.println("-->"+startApp.getAccessToken(urlAccessToken));
+                        String accessToken  = startApp.getAccessToken(urlAccessToken);
                     }
                 }
             }
